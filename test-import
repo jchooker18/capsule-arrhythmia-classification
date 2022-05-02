@@ -1,0 +1,33 @@
+from __future__ import print_function
+
+from keras.datasets import mnist
+import keras
+from keras.utils import np_utils
+import random
+from sklearn.metrics import accuracy_score
+import numpy as np
+from numpy import asarray
+from sklearn.preprocessing import OneHotEncoder
+import PIL
+from PIL import Image
+
+
+pid = np.load('data/mitdb_pid.npy')
+label = np.load('data/mitdb_label.npy')
+
+classes =['N','L','R','V','/','A','F','f','j','a','E','J','e','Q','S']
+
+#numerical encoder - labels
+index = 0 
+for x in classes:
+    for i in range(len(label)):
+        if label[i] == x:
+            label[i] = index
+    index = index +1
+
+#numerical encoder - images
+NumpyImages=[]
+for y in range(len(label)):
+    image = Image.open('data/2d-images/{}.png'.format(y))
+    numpydata = asarray(image)
+    NumpyImages.append(numpydata)
