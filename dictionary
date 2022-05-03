@@ -19,3 +19,10 @@
     f		Fusion of paced and normal beat
     Q		Unclassifiable beat
     ?		Beat not classified during learning
+
+classes we are using:
+    classes =['N','L','R','V','/','A','F','f','j','a','E','J','e','Q','S']
+    classes_ind = np.asarray(list(range(len(classes)))) #1,2,..,15
+    
+classes with 0 representation:
+    null_classes = ['E','J','e','Q','S']
