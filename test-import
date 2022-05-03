@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import os
 from keras.datasets import mnist
 import keras
 from keras.utils import np_utils
@@ -10,6 +10,7 @@ from numpy import asarray
 from sklearn.preprocessing import OneHotEncoder
 import PIL
 from PIL import Image
+from ladder_net import get_ladder_network_fc
 
 
 pid = np.load('data/mitdb_pid.npy')
@@ -18,16 +19,20 @@ label = np.load('data/mitdb_label.npy')
 classes =['N','L','R','V','/','A','F','f','j','a','E','J','e','Q','S']
 
 #numerical encoder - labels
-index = 0 
-for x in classes:
-    for i in range(len(label)):
-        if label[i] == x:
-            label[i] = index
-    index = index +1
+#index = 0 
+#for x in classes:
+#    for i in range(len(label)):
+#        if label[i] == x:
+#            label[i] = index
+#    index = index +1
 
 #numerical encoder - images
-NumpyImages=[]
+
+save_path = 'data/2d-arrays/'
+#NumpyImages=[]
 for y in range(len(label)):
     image = Image.open('data/2d-images/{}.png'.format(y))
     numpydata = asarray(image)
-    NumpyImages.append(numpydata)
+    #NumpyImages.append(numpydata)
+    np.save(os.path.join(save_path, '{}.npy'.format(y)), numpydata)
+    print('saved {} out of'.format(y), len(label) )
