@@ -1,0 +1,21 @@
+    This is the arrythmia dictionary
+    Code		Description
+    N		Normal beat (displayed as . by the PhysioBank ATM, LightWAVE, pschart, and psfd)
+    L		Left bundle branch block beat
+    R		Right bundle branch block beat
+    B		Bundle branch block beat (unspecified)
+    A		Atrial premature beat
+    a		Aberrated atrial premature beat
+    J		Nodal (junctional) premature beat
+    S		Supraventricular premature or ectopic beat (atrial or nodal)
+    V		Premature ventricular contraction
+    r		R-on-T premature ventricular contraction
+    F		Fusion of ventricular and normal beat
+    e		Atrial escape beat
+    j		Nodal (junctional) escape beat
+    n		Supraventricular escape beat (atrial or nodal)
+    E		Ventricular escape beat
+    /		Paced beat
+    f		Fusion of paced and normal beat
+    Q		Unclassifiable beat
+    ?		Beat not classified during learning
