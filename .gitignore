@@ -1,3 +1,10 @@
+# large data files
+data/2d-arrays.zip
+data/2d-images/
+data/2d-images.zip
+data/mitdb_images_np.npy
+data/sample_images.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
