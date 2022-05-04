@@ -1,9 +1,10 @@
 # large data files
+data/mit-bih-arrhythmia-database-1.0.0.zip
 data/2d-arrays.zip
 data/2d-images/
 data/2d-images.zip
 data/mitdb_images_np.npy
-data/sample_images.zip
+data/sample-images.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
