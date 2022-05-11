@@ -9,7 +9,7 @@ from tensorflow.keras import layers, models
 from sklearn.model_selection import train_test_split # pip install and conda install scikit-learn
 
 # get data
-images = np.load('data/mitdb_images_np.npy')
+images = np.load('data/mitdb_images_np_28x28.npy')
 images = images / 255
 
 labels = np.load('data/mitdb_label.npy')

@@ -1,6 +1,6 @@
 import numpy as np
 import os
-import wfdb     # had to pip install
+import wfdb     # pip install
 from collections import Counter
 from matplotlib import pyplot as plt
 from PIL import Image
@@ -121,11 +121,42 @@ def convert_to_image(signal_data):
 
     return
 
+def read_images(open_path, save_path, labels):
+    """
+    Read 2D grayscale images into a numpy array
+    """
+
+    NumpyImages=[]
+
+    for y in range(len(labels)):
+        image = Image.open(open_path + '{}.png'.format(y))
+        # image = image.resize((28, 28))
+        # image = image.resize((60, 60))
+        image = image.resize((100, 100))
+        
+        numpydata = np.array(image, np.float32)
+
+        if len(numpydata.shape) == 3:
+            image = image.convert('L')
+            numpydata = np.array(image, np.float32)
+
+        NumpyImages.append(numpydata)
+
+        if y % 1000 == 0:
+            print(y)
+
+    # np.save(os.path.join(save_path, 'mitdb_images_np_28x28.npy'.format(y)), NumpyImages)
+    # np.save(os.path.join(save_path, 'mitdb_images_np_60x60.npy'.format(y)), NumpyImages)
+    np.save(os.path.join(save_path, 'mitdb_images_np_100x100.npy'.format(y)), NumpyImages)
+
+    return
+
 
 if __name__ == "__main__":
 
     path = 'data/mit-bih-arrhythmia-database-1.0.0'
     save_path = 'data/'
+    open_path = 'data/2d-images/'
     labels_to_use = ['N', 'L', 'R', 'V', '/', 'A', 'F', 'f', 'j', 'a', 'E', 'J', 'e', 'Q', 'S']
 
     with open(os.path.join(path, 'RECORDS'), 'r') as fin:
@@ -134,3 +165,5 @@ if __name__ == "__main__":
     signal_data, labels, pids = preprocess_signals(all_record_name, labels_to_use, path, save_path)
 
     convert_to_image(signal_data)
+
+    read_images(open_path, save_path, labels)
