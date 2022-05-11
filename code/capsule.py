@@ -11,30 +11,31 @@ import numpy as np
 np.random.seed(1)
 from plots import loss_plot, accuracy_plot
 import pickle
-
+from collections import Counter
 import tensorflow as tf
 tf.random.set_seed(1)
 import scipy.io as io
-
 from sklearn.model_selection import train_test_split
 
-labels_path = './data/mitdb_label.npy'
-# images_path = 'mitdb_images_np_28x28.npy'
-images_path = './data/mitdb_images_np_100x100.npy'
-# images_path = 'mitdb_images_np_60x60.npy'
+"""Get data"""
 
-# get data
-images = np.load('data/mitdb_images_np_100x100.npy', mmap_mode='r')
+labels_path = 'data/mitdb_label.npy'
+# images_path = 'data/mitdb_images_np_28x28.npy'
+# images_path = 'data/mitdb_images_np_60x60.npy'
+images_path = 'data/mitdb_images_np_100x100.npy'
+
+
+images = np.load(images_path, mmap_mode='r')
 images = images / 255.
 
 print('images loaded')
 
-labels = np.load('./data/mitdb_label.npy')
+labels = np.load(labels_path)
 
 print('labels loaded')
 
-classes =['N','L','R','V','/','A','F','f','j','a','E','J','e','Q','S']
-# classes =['N','L','R','V','/','A']
+classes = ['N','L','R','V','/','A','F','f','j','a','E','J','e','Q','S']
+
 # replace class characters with indices 
 index = 0
 for x in classes:
@@ -44,15 +45,13 @@ for x in classes:
    index = index +1
 
 
-"""
-Extracting top 6 classes for testing
-"""
+# Extracting top 6 classes for testing
 index_top_classes = np.where(np.logical_and(labels>='0', labels<='5'))
 images = images[index_top_classes]
 labels = labels[index_top_classes]
+
 # split into train and test sets, stratify on labels to make sure all classes represented in both
-X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size=0.2, 
-                                                                        stratify=labels) #, random_state=5
+X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size=0.2, stratify=labels) #, random_state=5
 
 # add a channel dimension
 X_train = np.expand_dims(X_train, axis=3)
@@ -63,11 +62,6 @@ y_test = y_test.astype('uint8')
 
 del images
 del labels
-
-# y_train = train_labels
-# y_test = test_labels
-
-from collections import Counter
 
 y_train_c = Counter(y_train)
 y_test_c = Counter(y_test)
@@ -106,12 +100,9 @@ X_test = np.concatenate((X_test_class_0_small, X_test_class_other))
 #!/usr/bin/env python
 # coding: utf-8
 
-# import numpy as np
 from tqdm import tqdm
-# import tensorflow as tf
 from datetime import datetime
 import ssl
-# ssl._create_default_https_context = ssl._create_unverified_context
 
 # device_name = tf.test.gpu_device_name()
 # if device_name != '/device:GPU:0':
@@ -255,8 +246,6 @@ class CapsuleNetwork(tf.keras.Model):
             reconstructed_image = self.dense_3(reconstructed_image)
         return reconstructed_image
 
-# tf.summary.trace_on(graph=True, profiler=True)
-
 
 model = CapsuleNetwork(**params, pixels=pixels)
 
@@ -277,8 +266,6 @@ def loss_function(v, reconstructed_image, y, y_image):
     l = tf.add(y * left_margin, lambda_ * (1.0 - y) * right_margin)
     
     margin_loss = tf.reduce_mean(tf.reduce_sum(l, axis=-1))
-
-    # print(y_image.shape)
     
     y_image_flat = tf.reshape(y_image, [-1, pixels])
     reconstruction_loss = tf.reduce_mean(tf.square(y_image_flat - reconstructed_image))
