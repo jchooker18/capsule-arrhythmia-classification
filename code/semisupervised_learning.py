@@ -251,7 +251,7 @@ plt.show()
 
 thres = 0.82
 unsup_epoch = 20
-semi_epoch = 5
+semi_epoch = 20
 results=[]
 
 
