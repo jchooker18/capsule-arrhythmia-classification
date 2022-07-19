@@ -1,4 +1,6 @@
-# capsule-arrhythmia-classification
+# Semi-Supervised Arrhythmia Classification Using Capsules
+
+The project report can be found [here](https://drive.google.com/file/d/1UjYpERS4_cPJ8B-pfzS88PtFZzRtRPap/view?usp=sharing), and the project presentation can be found [here](https://docs.google.com/presentation/d/1d68pY1h7Hc7xJzjJT1Vj9Tm0CObxjb7Y/edit?usp=sharing&ouid=109646155007494567692&rtpof=true&sd=true).
 
 The data files used throughout this project that are too large for Github can be downloaded at the following links:  
 
